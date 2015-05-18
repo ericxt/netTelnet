@@ -6,16 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.apache.commons.net.telnet.TelnetClient;
 
-import com.mysql.jdbc.Connection;
-
 import DBDriverUtil.MysqlDBUtil;
 import MysqlDAOImpl.MysqlDAOImpl;
+
+import com.mysql.jdbc.Connection;
 
 public class NetTelnet {
 	private TelnetClient telnet = new TelnetClient();
@@ -103,7 +101,7 @@ public class NetTelnet {
 		// "value(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		// for market_quotation
-		String sql = "insert into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+		String sql = "insert ignore  into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
 				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
 				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
 				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
