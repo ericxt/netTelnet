@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.commons.net.telnet.TelnetClient;
 import org.apache.logging.log4j.LogManager;
@@ -19,13 +21,15 @@ import MysqlDAOImpl.MysqlDAOImpl;
 
 import com.mysql.jdbc.Connection;
 
+
+
 public class NetTelnet {
 	static Logger logger = LogManager.getLogger(NetTelnet.class.getName());
 
-	private TelnetClient telnet = new TelnetClient();
-	private InputStream in;
-	private PrintStream out;
-	private static MysqlDAOImpl daoImpl = new MysqlDAOImpl();
+	public TelnetClient telnet = new TelnetClient();
+	public InputStream in;
+	public PrintStream out;
+	public static MysqlDAOImpl daoImpl = new MysqlDAOImpl();
 
 	public NetTelnet(String ip, int port, String user, String password) {
 		try {
@@ -152,21 +156,33 @@ public class NetTelnet {
 					// prepareStatement = conn.prepareStatement(sql);
 					System.out.println("insert 500 records");
 				}
-				System.out.println(count);
-//				Calendar calendar = Calendar.getInstance();
-//				System.out.println("current time >>> " + calendar.getTime()
-//						+ " ,count >>> " + count);
-//
-//				if (isExpired(calendar)) {
-//					System.out.println("date is expired, break!");
-//					break;
-//				}
-			}
+//				System.out.println(count);
+				Calendar calendar = Calendar.getInstance();
+				System.out.println("current time >>> " + calendar.getTime()
+						+ " ,count >>> " + count);
 
-			if (count % 500 != 0) {
-				prepareStatement.executeBatch();
-				conn.commit();
-				System.out.println("rest records is " + (count % 500));
+				if (isNoonExpired(calendar)) {
+					System.out.println("date is expired, sleep!");
+					if (count % 500 != 0) {
+						prepareStatement.executeBatch();
+						conn.commit();
+						System.out.println("rest records is " + (count % 500));
+					}
+					try {
+						Thread.sleep(90 * 60 * 1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					};
+				} else if (isAfterExpired(calendar)) {
+					System.out.println("date is expired, break!");
+					if (count % 500 != 0) {
+						prepareStatement.executeBatch();
+						conn.commit();
+						System.out.println("rest records is " + (count % 500));
+					}
+					break;
+				}
 			}
 
 			prepareStatement.close();
@@ -182,10 +198,24 @@ public class NetTelnet {
 		}
 	}
 
-	private boolean isExpired(Calendar calendar) {
+	private boolean isAfterExpired(Calendar calendar) {
 		// TODO Auto-generated method stub
 		if (calendar == null) {
-			System.out.println("calendar is null");
+			System.out.println("afternoon calendar is null");
+			return false;
+		}
+		int hour = calendar.get(calendar.HOUR_OF_DAY);
+		int minute = calendar.get(calendar.MINUTE);
+		if ((hour == 15 && minute > 16) || (hour > 15)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isNoonExpired(Calendar calendar) {
+		// TODO Auto-generated method stub
+		if (calendar == null) {
+			System.out.println("noon calendar is null");
 			return false;
 		}
 		int hour = calendar.get(calendar.HOUR_OF_DAY);
@@ -245,11 +275,58 @@ public class NetTelnet {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	public static void main(String[] args) throws SQLException {
+//		try {
+//			System.out.println("启动Telnet...");
+//			logger.info("启动Telnet...");
+//			String ip = "203.187.171.249";
+//			int port = 33331;
+//			String user = "";
+//			String password = "";
+//			NetTelnet telnet = new NetTelnet(ip, port, user, password);
+//			byte[] bytes = new byte[256];
+//			System.out.println(telnet.in.read(bytes));
+//			System.out.println(new String(bytes));
+//
+//			// telnet.sendCommand("STA"); // substitute TA
+//			telnet.sendCommand("SQUOTE");
+//			telnet.sendCommand("UQUOTE");
+//			telnet.sendCommand("QUIT");
+//			System.out.println("显示结果");
+//			logger.info("raw data extraction ended");
+//			telnet.disconnect();
+//		} catch (Exception e) {
+//			logger.catching(e);
+//			e.printStackTrace();
+//		}
+		
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		calendar.set(year, month, day + 1, 9, 15, 0);
+		Date date = calendar.getTime();
+		System.out.println(date);
+
+		int period = 24 * 60 * 60 * 1000;
+		Timer timer = new Timer();
+		TimerTask task = new RawDataExtraction();
+		timer.schedule(task, date, period);
+
+	}
+}
+
+class RawDataExtraction extends TimerTask {
+	static Logger logger = LogManager.getLogger();
+
+	public void run() {
+		// TODO Auto-generated method stub
 		try {
 			System.out.println("启动Telnet...");
-			logger.info("启动Telnet...");
+			logger.info("启动Telnet >>> " + new Date(System.currentTimeMillis()));
 			String ip = "203.187.171.249";
 			int port = 33331;
 			String user = "";
@@ -270,6 +347,7 @@ public class NetTelnet {
 			logger.catching(e);
 			e.printStackTrace();
 		}
-
+		
 	}
+	
 }
