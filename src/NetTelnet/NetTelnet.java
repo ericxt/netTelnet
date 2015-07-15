@@ -7,8 +7,12 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.commons.net.telnet.TelnetClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import DBDriverUtil.MysqlDBUtil;
 import MysqlDAOImpl.MysqlDAOImpl;
@@ -16,35 +20,47 @@ import MysqlDAOImpl.MysqlDAOImpl;
 import com.mysql.jdbc.Connection;
 
 public class NetTelnet {
+	static Logger logger = LogManager.getLogger(NetTelnet.class.getName());
+
 	private TelnetClient telnet = new TelnetClient();
 	private InputStream in;
 	private PrintStream out;
 	private static MysqlDAOImpl daoImpl = new MysqlDAOImpl();
 
-	// 普通用户结束
 	public NetTelnet(String ip, int port, String user, String password) {
 		try {
 			telnet.connect(ip, port);
+			logger.info("telnet >>> ip : " + ip + ", port : " + port);
 			in = telnet.getInputStream();
 			out = new PrintStream(telnet.getOutputStream());
 			// 根据root用户设置结束符
 			// this.prompt = user.equals("root") ? '#' : '$';
 			// login(user, password);
 		} catch (Exception e) {
+			logger.catching(e);
 			e.printStackTrace();
 		}
 	}
 
-	/** * 登录 * * @param user * @param password */
+	/**
+	 * login telnet with userName and password
+	 * 
+	 * @param user
+	 * @param password
+	 */
 	public void login(String user, String password) {
-		readUntil("login:");
+		readUtil("login:");
 		write(user);
-		readUntil("Password:");
+		readUtil("Password:");
 		write(password);
 	}
 
-	/** * 读取分析结果 * * @param pattern * @return */
-	public void readUntil(String command) {
+	/**
+	 * naive read method
+	 * 
+	 * @param command
+	 */
+	public void readUtil(String command) {
 		try {
 			System.out.println(">>>readUtil : " + command);
 			int count = 0;
@@ -82,91 +98,127 @@ public class NetTelnet {
 		}
 	}
 
-	/* 改进的读写操作 */
+	/**
+	 * improved readAndWrite method receive the raw data and insert the data
+	 * into database
+	 * 
+	 * @param command
+	 * @throws SQLException
+	 */
 	public void readAndWrite(String command) throws SQLException {
 		int count = 0;
 
-		// for index_ta
-		// String sql =
-		// "insert into index_ta(Flag,TransactionTime,ContractId,TAIndex,Buy1Price,"
-		// +
-		// "Buy2Price,Buy3Price,Buy4Price,Buy5Price,Buy1Num,Buy2Num,Buy3Num,Buy4Num,"
-		// +
-		// "Buy5Num,Sell1Price,Sell2Price,Sell3Price,Sell4Price,Sell5Price,Sell1Num,"
-		// +
-		// "Sell2Num,Sell3Num,Sell4Num,Sell5Num,m_dZJSJ,m_dJJSJ,m_dCJJJ,m_dZSP,m_dJSP,"
-		// +
-		// "m_dJKP,m_nZCCL,m_nCCL,m_dZXJ,m_nCJSL,m_dCJJE,m_dZGBJ,m_dZDBJ,m_dZGJ,m_dZDJ,m_dZXSD,m_dJXSD) "
-		// +
-		// "value(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
 		// for market_quotation
-		String sql = "insert ignore  into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+		String sql = "insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
 				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
 				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
 				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
 				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
-				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) value(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
 				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
+//		String sql = "insert ignore into xcube.market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,"
+//				+ "PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,"
+//				+ "TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,"
+//				+ "BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,"
+//				+ "BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
+//				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) "
+//				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		Connection conn = MysqlDBUtil.getConnection();
+		logger.info("insert raw data from telnet to database >>> " + sql);
 		PreparedStatement prepareStatement = conn.prepareStatement(sql);
 		InputStreamReader inputStreamReader = new InputStreamReader(in);
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
 		try {
+			conn.setAutoCommit(false);
+
 			while (bufferedReader.readLine() != null) {
-				conn.setAutoCommit(false);
 				String record = bufferedReader.readLine().toString().trim();
+				// remove the beginning prefix "QUOTE" and the commas
 				record = record.substring(6);
-				// if (record.contains("IF") || record.contains("SH") ||
-				// record.contains("SZ")) {
 				count++;
 				String[] split = record.split(",");
-//				daoImpl.insertForTA(split, prepareStatement);    // for TA
+				// daoImpl.insertForTA(split, prepareStatement); // for TA
 				daoImpl.insertForQUOTE(split, prepareStatement);
 				prepareStatement.addBatch();
+
 				if (count % 500 == 0) {
 					prepareStatement.executeBatch();
 					conn.commit();
-					prepareStatement.close();
-					conn.close();
-					conn = MysqlDBUtil.getConnection();
-					conn.setAutoCommit(false);
-					prepareStatement = conn.prepareStatement(sql);
+					// prepareStatement.close();
+					// conn.close();
+					// conn = MysqlDBUtil.getConnection();
+					// conn.setAutoCommit(false);
+					// prepareStatement = conn.prepareStatement(sql);
 					System.out.println("insert 500 records");
 				}
-				System.out.println("count >>> " + count);
-				// }
+				System.out.println(count);
+//				Calendar calendar = Calendar.getInstance();
+//				System.out.println("current time >>> " + calendar.getTime()
+//						+ " ,count >>> " + count);
+//
+//				if (isExpired(calendar)) {
+//					System.out.println("date is expired, break!");
+//					break;
+//				}
 			}
+
 			if (count % 500 != 0) {
 				prepareStatement.executeBatch();
 				conn.commit();
+				System.out.println("rest records is " + (count % 500));
 			}
 
 			prepareStatement.close();
 			conn.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			logger.catching(e);
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			logger.catching(e);
 			e.printStackTrace();
 		}
 	}
 
-	/** * 写操作 * * @param value */
+	private boolean isExpired(Calendar calendar) {
+		// TODO Auto-generated method stub
+		if (calendar == null) {
+			System.out.println("calendar is null");
+			return false;
+		}
+		int hour = calendar.get(calendar.HOUR_OF_DAY);
+		int minute = calendar.get(calendar.MINUTE);
+		if ((hour == 11 && minute > 32) || (hour > 11 && hour < 13)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * write to the outputStream
+	 * 
+	 * @param value
+	 */
 	public void write(String value) {
 		try {
 			out.println(value);
 			out.flush();
 			System.out.println(">>>write");
 		} catch (Exception e) {
+			logger.catching(e);
 			e.printStackTrace();
 		}
 	}
 
-	/** * 向目标发送命令字符串 * * @param command * @return */
+	/**
+	 * send the command
+	 * 
+	 * @param command
+	 */
 	public void sendCommand(String command) {
+		logger.info("substitute QUOTE via command >>> " + command);
 		try {
 			System.out.println(">>>sendCommand : " + command);
 			if (command.startsWith("S")) {
@@ -177,32 +229,27 @@ public class NetTelnet {
 				write(command);
 			}
 		} catch (Exception e) {
+			logger.catching(e);
 			e.printStackTrace();
 		}
 	}
 
-	/** * 关闭连接 */
+	/**
+	 * disconnect the telnet connection
+	 */
 	public void disconnect() {
 		try {
 			telnet.disconnect();
 		} catch (Exception e) {
+			logger.catching(e);
 			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) throws SQLException {
-		// Connection conn = MysqlDBUtil.getConnection();
-		// Statement statement = conn.createStatement();
-		// String sql = "select * from mysql.user";
-		// ResultSet resultSet = statement.executeQuery(sql);
-		// while (resultSet.next()) {
-		// String host = resultSet.getString("host");
-		// String user = resultSet.getString("user");
-		// System.out.println("host: " + host + "   " + "user:" + user);
-		// }
-
 		try {
 			System.out.println("启动Telnet...");
+			logger.info("启动Telnet...");
 			String ip = "203.187.171.249";
 			int port = 33331;
 			String user = "";
@@ -211,15 +258,18 @@ public class NetTelnet {
 			byte[] bytes = new byte[256];
 			System.out.println(telnet.in.read(bytes));
 			System.out.println(new String(bytes));
-			
-//			telnet.sendCommand("STA");    // substitute TA
-			telnet.sendCommand("SQUOTE");
 
+			// telnet.sendCommand("STA"); // substitute TA
+			telnet.sendCommand("SQUOTE");
+			telnet.sendCommand("UQUOTE");
+			telnet.sendCommand("QUIT");
 			System.out.println("显示结果");
+			logger.info("raw data extraction ended");
 			telnet.disconnect();
 		} catch (Exception e) {
+			logger.catching(e);
 			e.printStackTrace();
-		} 
+		}
 
 	}
 }
