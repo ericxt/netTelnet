@@ -8,9 +8,6 @@ import java.io.PrintStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import mysqlDAOImpl.MysqlDAOImpl;
 
@@ -36,9 +33,6 @@ public class NetTelnet {
 			logger.info("telnet >>> ip : " + ip + ", port : " + port);
 			in = telnet.getInputStream();
 			out = new PrintStream(telnet.getOutputStream());
-			// 根据root用户设置结束符
-			// this.prompt = user.equals("root") ? '#' : '$';
-			// login(user, password);
 		} catch (Exception e) {
 			logger.catching(e);
 			e.printStackTrace();
@@ -92,10 +86,6 @@ public class NetTelnet {
 				}
 				ch = (char) in.read();
 			}
-			// System.out.println("sending UTA");
-			// sendCommand("UTA");
-			// System.out.println("sending QUIT");
-			// sendCommand("QUIT");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -112,35 +102,57 @@ public class NetTelnet {
 		int count = 0;
 
 		// for market_quotation
-		String sql = "insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+		String stockSql = "insert ignore into stock_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
 				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
 				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
 				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
 				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
 				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
 				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		// String sql =
-		// "insert ignore into xcube.market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,"
-		// +
-		// "PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,"
-		// +
-		// "TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,"
-		// +
-		// "BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,"
-		// +
-		// "BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
-		// + "BidPrice5,AskPrice5,BidVolume5,AskVolume5) "
-		// +
-		// "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		String futureSql = "insert ignore into futures_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
+				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
+				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
+				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
+				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String debtSql = "insert ignore into debt_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
+				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
+				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
+				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
+				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String indexSql = "insert ignore into index_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
+				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
+				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
+				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
+				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		Connection conn = MysqlDBUtil.getConnection();
-		logger.info("insert raw data from telnet to database >>> " + sql);
-		PreparedStatement prepareStatement = conn.prepareStatement(sql);
+		logger.info("insert futures raw data from telnet to database >>> "
+				+ futureSql);
+		logger.info("insert debt raw data from telnet to database >>> "
+				+ debtSql);
+		logger.info("insert index raw data from telnet to database >>> "
+				+ indexSql);
+		logger.info("insert stock raw data from telnet to database >>> "
+				+ stockSql);
+		PreparedStatement futurePrepareStatement = conn
+				.prepareStatement(futureSql);
+		PreparedStatement debtPrepareStatement = conn.prepareStatement(debtSql);
+		PreparedStatement indexPrepareStatement = conn
+				.prepareStatement(indexSql);
+		PreparedStatement stockPrepareStatement = conn
+				.prepareStatement(stockSql);
 		InputStreamReader inputStreamReader = new InputStreamReader(in);
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 		try {
 			conn.setAutoCommit(false);
 			String record = null;
+			
 			while ((record = bufferedReader.readLine().toString().trim()) != null) {
 				Calendar calendar = Calendar.getInstance();
 				// if(isAfterExpired(calendar)) break;
@@ -151,28 +163,38 @@ public class NetTelnet {
 				record = record.substring(6);
 				count++;
 				String[] split = record.split(",");
-				// daoImpl.insertForTA(split, prepareStatement); // for TA
-				daoImpl.insertForQUOTE(split, prepareStatement);
-				prepareStatement.addBatch();
+				if (split[1].startsWith("S")) {
+					daoImpl.insertForQUOTE(split, stockPrepareStatement);
+					stockPrepareStatement.addBatch();
+				} else if (split[1].startsWith("TA") || split[1].startsWith("TC")) {
+					daoImpl.insertForQUOTE(split, futurePrepareStatement);
+					futurePrepareStatement.addBatch();
+				} else if (split[1].matches("^(TF|T)[0-9]+")) {
+					daoImpl.insertForQUOTE(split, debtPrepareStatement);
+					debtPrepareStatement.addBatch();
+				} else if (split[1].startsWith("I")) {
+					daoImpl.insertForQUOTE(split, indexPrepareStatement);
+					indexPrepareStatement.addBatch();
+				}
 
 				if (count % 500 == 0) {
-					prepareStatement.executeBatch();
+					stockPrepareStatement.executeBatch();
+					futurePrepareStatement.executeBatch();
+					debtPrepareStatement.executeBatch();
+					indexPrepareStatement.executeBatch();
 					conn.commit();
-					// prepareStatement.close();
-					// conn.close();
-					// conn = MysqlDBUtil.getConnection();
-					// conn.setAutoCommit(false);
-					// prepareStatement = conn.prepareStatement(sql);
 					System.out.println("insert 500 records");
 				}
-				// System.out.println(count);
 				System.out.println("current time >>> " + calendar.getTime()
 						+ " ,count >>> " + count);
 
 				if (isNoonExpired(calendar)) {
 					System.out.println("date is expired, sleep!");
 					if (count % 500 != 0) {
-						prepareStatement.executeBatch();
+						stockPrepareStatement.executeBatch();
+						futurePrepareStatement.executeBatch();
+						debtPrepareStatement.executeBatch();
+						indexPrepareStatement.executeBatch();
 						conn.commit();
 						System.out.println("rest records is " + (count % 500));
 					}
@@ -191,21 +213,21 @@ public class NetTelnet {
 				} else if (isAfterExpired(calendar)) {
 					System.out.println("date is expired, break!");
 					if (count % 500 != 0) {
-						prepareStatement.executeBatch();
+						stockPrepareStatement.executeBatch();
+						futurePrepareStatement.executeBatch();
+						debtPrepareStatement.executeBatch();
+						indexPrepareStatement.executeBatch();
 						conn.commit();
 						System.out.println("rest records is " + (count % 500));
 					}
 					break;
 				}
 			}
-			// System.out.println("here1");
-			// if (count % 500 != 0) {
-			// prepareStatement.executeBatch();
-			// conn.commit();
-			// System.out.println("rest records is " + (count % 500));
-			// }
-			// System.out.println("here2");
-			prepareStatement.close();
+			
+			stockPrepareStatement.close();
+			futurePrepareStatement.close();
+			debtPrepareStatement.close();
+			indexPrepareStatement.close();
 			conn.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -230,7 +252,8 @@ public class NetTelnet {
 		String sql = "insert ignore into com_trading_sentiment(TradingTime, Ticker, "
 				+ "TradingSentiment) values(?,?,?)";
 		Connection conn = MysqlDBUtil.getConnection();
-		logger.info("insert trading sentiment data from telnet to database >>> " + sql);
+		logger.info("insert trading sentiment data from telnet to database >>> "
+				+ sql);
 		PreparedStatement prepareStatement = conn.prepareStatement(sql);
 		InputStreamReader inputStreamReader = new InputStreamReader(in);
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -268,7 +291,8 @@ public class NetTelnet {
 					if (count % 500 != 0) {
 						prepareStatement.executeBatch();
 						conn.commit();
-						System.out.println("rest trading sentiment records is " + (count % 500));
+						System.out.println("rest trading sentiment records is "
+								+ (count % 500));
 					}
 					try {
 						long curMillis = calendar.getTimeInMillis();
@@ -287,18 +311,13 @@ public class NetTelnet {
 					if (count % 500 != 0) {
 						prepareStatement.executeBatch();
 						conn.commit();
-						System.out.println("rest trading sentiment records is " + (count % 500));
+						System.out.println("rest trading sentiment records is "
+								+ (count % 500));
 					}
 					break;
 				}
 			}
-			// System.out.println("here1");
-			// if (count % 500 != 0) {
-			// prepareStatement.executeBatch();
-			// conn.commit();
-			// System.out.println("rest records is " + (count % 500));
-			// }
-			// System.out.println("here2");
+			
 			prepareStatement.close();
 			conn.close();
 		} catch (IOException e) {
