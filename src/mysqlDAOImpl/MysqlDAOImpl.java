@@ -1,12 +1,15 @@
-package MysqlDAOImpl;
+package mysqlDAOImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+
+import mysqlDAO.MysqlDAO;
 
 import com.mysql.jdbc.Connection;
+import com.sun.prism.Presentable;
 
-import DBDriverUtil.MysqlDBUtil;
-import MysqlDAO.MysqlDAO;
+import dBDriverUtil.MysqlDBUtil;
 
 public class MysqlDAOImpl implements MysqlDAO {
 
@@ -65,118 +68,16 @@ public class MysqlDAOImpl implements MysqlDAO {
 		return false;
 	}
 
-	public void insertForTA(String[] record, PreparedStatement prepareStatement) {
+	public void insertForTradingSentiment(String[] record,
+			PreparedStatement prepareStatement) {
 		// TODO Auto-generated method stub
-
-		for (int i = 0; i < 3; i++) {
-			try {
-				prepareStatement.setString(i + 1, record[i]);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		for (int i = 0; i < 6; i++) {
-			try {
-				prepareStatement.setFloat(i + 4,
-						Float.parseFloat(record[i + 3]));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		for (int i = 0; i < 5; i++) {
-			try {
-				prepareStatement
-						.setInt(i + 10, Integer.parseInt(record[i + 9]));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		for (int i = 0; i < 5; i++) {
-			try {
-				prepareStatement.setFloat(i + 15,
-						Float.parseFloat(record[i + 14]));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		for (int i = 0; i < 5; i++) {
-			try {
-				prepareStatement.setInt(i + 20,
-						Integer.parseInt(record[i + 19]));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		for (int i = 0; i < 6; i++) {
-			try {
-				prepareStatement.setFloat(i + 25,
-						Float.parseFloat(record[i + 24]));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		for (int i = 0; i < 2; i++) {
-			try {
-				prepareStatement.setInt(i + 31,
-						Integer.parseInt(record[i + 30]));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		try {
-			prepareStatement.setFloat(33, Float.parseFloat(record[32]));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			prepareStatement.setTimestamp(1, Timestamp.valueOf(record[0]));
+			prepareStatement.setString(2, record[1]);
+			prepareStatement.setFloat(3, Float.parseFloat(record[2]));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		try {
-			prepareStatement.setInt(34, Integer.parseInt(record[33]));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (int i = 0; i < 7; i++) {
-			try {
-				prepareStatement.setFloat(i + 35,
-						Float.parseFloat(record[i + 34]));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 

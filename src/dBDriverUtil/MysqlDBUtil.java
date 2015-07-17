@@ -1,4 +1,4 @@
-package DBDriverUtil;
+package dBDriverUtil;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;

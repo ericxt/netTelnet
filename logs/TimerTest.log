@@ -1,0 +1,224 @@
+12:20:29.744 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:20:29 CST 2015
+12:20:29.837 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:20:29.876 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:20:30.778 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:20:30.778 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:20:30.867 [Timer-0] ERROR NetTelnet.NetTelnet - catching
+java.lang.NumberFormatException: For input string: "IMPV"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043) ~[?:1.8.0_45]
+	at sun.misc.FloatingDecimal.parseFloat(FloatingDecimal.java:122) ~[?:1.8.0_45]
+	at java.lang.Float.parseFloat(Float.java:451) ~[?:1.8.0_45]
+	at MysqlDAOImpl.MysqlDAOImpl.insertForQUOTE(MysqlDAOImpl.java:190) ~[bin/:?]
+	at NetTelnet.NetTelnet.readAndWrite(NetTelnet.java:156) ~[bin/:?]
+	at NetTelnet.NetTelnet.sendCommand(NetTelnet.java:276) [bin/:?]
+	at NetTelnet.RawDataExtraction.run(NetTelnet.java:357) [bin/:?]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [?:1.8.0_45]
+	at java.util.TimerThread.run(Timer.java:505) [?:1.8.0_45]
+12:20:30.876 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+12:20:30.877 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+12:20:30.877 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+12:20:38.705 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:20:38 CST 2015
+12:20:38.793 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:20:38.836 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:20:39.662 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:20:39.663 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:20:39.747 [Timer-0] ERROR NetTelnet.NetTelnet - catching
+java.lang.NumberFormatException: For input string: "IMPV"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043) ~[?:1.8.0_45]
+	at sun.misc.FloatingDecimal.parseFloat(FloatingDecimal.java:122) ~[?:1.8.0_45]
+	at java.lang.Float.parseFloat(Float.java:451) ~[?:1.8.0_45]
+	at MysqlDAOImpl.MysqlDAOImpl.insertForQUOTE(MysqlDAOImpl.java:190) ~[bin/:?]
+	at NetTelnet.NetTelnet.readAndWrite(NetTelnet.java:156) ~[bin/:?]
+	at NetTelnet.NetTelnet.sendCommand(NetTelnet.java:276) [bin/:?]
+	at NetTelnet.RawDataExtraction.run(NetTelnet.java:357) [bin/:?]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [?:1.8.0_45]
+	at java.util.TimerThread.run(Timer.java:505) [?:1.8.0_45]
+12:20:39.756 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+12:20:39.757 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+12:20:39.757 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+12:22:04.368 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:22:04 CST 2015
+12:22:04.441 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:22:04.466 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:22:05.244 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:22:05.245 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:22:05.325 [Timer-0] ERROR NetTelnet.NetTelnet - catching
+java.lang.NumberFormatException: For input string: "IMPV"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043) ~[?:1.8.0_45]
+	at sun.misc.FloatingDecimal.parseFloat(FloatingDecimal.java:122) ~[?:1.8.0_45]
+	at java.lang.Float.parseFloat(Float.java:451) ~[?:1.8.0_45]
+	at MysqlDAOImpl.MysqlDAOImpl.insertForQUOTE(MysqlDAOImpl.java:190) ~[bin/:?]
+	at NetTelnet.NetTelnet.readAndWrite(NetTelnet.java:156) ~[bin/:?]
+	at NetTelnet.NetTelnet.sendCommand(NetTelnet.java:276) [bin/:?]
+	at NetTelnet.RawDataExtraction.run(NetTelnet.java:358) [bin/:?]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [?:1.8.0_45]
+	at java.util.TimerThread.run(Timer.java:505) [?:1.8.0_45]
+12:22:05.334 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+12:22:05.334 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+12:22:05.335 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+12:23:26.810 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:23:26 CST 2015
+12:23:26.871 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:23:26.892 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:23:27.683 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:23:27.683 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:23:27.767 [Timer-0] ERROR NetTelnet.NetTelnet - catching
+java.lang.NumberFormatException: For input string: "IMPV"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043) ~[?:1.8.0_45]
+	at sun.misc.FloatingDecimal.parseFloat(FloatingDecimal.java:122) ~[?:1.8.0_45]
+	at java.lang.Float.parseFloat(Float.java:451) ~[?:1.8.0_45]
+	at MysqlDAOImpl.MysqlDAOImpl.insertForQUOTE(MysqlDAOImpl.java:190) ~[bin/:?]
+	at NetTelnet.NetTelnet.readAndWrite(NetTelnet.java:156) ~[bin/:?]
+	at NetTelnet.NetTelnet.sendCommand(NetTelnet.java:276) [bin/:?]
+	at NetTelnet.RawDataExtraction.run(NetTelnet.java:358) [bin/:?]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [?:1.8.0_45]
+	at java.util.TimerThread.run(Timer.java:505) [?:1.8.0_45]
+12:23:27.775 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+12:23:27.776 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+12:23:27.776 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+12:24:21.822 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:24:21 CST 2015
+12:24:21.893 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:24:21.918 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:24:22.727 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:24:22.728 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:24:22.811 [Timer-0] ERROR NetTelnet.NetTelnet - catching
+java.lang.NumberFormatException: For input string: "IMPV"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043) ~[?:1.8.0_45]
+	at sun.misc.FloatingDecimal.parseFloat(FloatingDecimal.java:122) ~[?:1.8.0_45]
+	at java.lang.Float.parseFloat(Float.java:451) ~[?:1.8.0_45]
+	at MysqlDAOImpl.MysqlDAOImpl.insertForQUOTE(MysqlDAOImpl.java:190) ~[bin/:?]
+	at NetTelnet.NetTelnet.readAndWrite(NetTelnet.java:156) ~[bin/:?]
+	at NetTelnet.NetTelnet.sendCommand(NetTelnet.java:276) [bin/:?]
+	at NetTelnet.RawDataExtraction.run(NetTelnet.java:358) [bin/:?]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [?:1.8.0_45]
+	at java.util.TimerThread.run(Timer.java:505) [?:1.8.0_45]
+12:24:22.820 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+12:24:22.820 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+12:24:22.821 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+12:31:36.830 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:31:36 CST 2015
+12:31:36.898 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:31:36.924 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:31:37.772 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:31:37.772 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:31:37.856 [Timer-0] ERROR NetTelnet.NetTelnet - catching
+java.lang.NumberFormatException: For input string: "IMPV"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043) ~[?:1.8.0_45]
+	at sun.misc.FloatingDecimal.parseFloat(FloatingDecimal.java:122) ~[?:1.8.0_45]
+	at java.lang.Float.parseFloat(Float.java:451) ~[?:1.8.0_45]
+	at MysqlDAOImpl.MysqlDAOImpl.insertForQUOTE(MysqlDAOImpl.java:190) ~[bin/:?]
+	at NetTelnet.NetTelnet.readAndWrite(NetTelnet.java:156) ~[bin/:?]
+	at NetTelnet.NetTelnet.sendCommand(NetTelnet.java:276) [bin/:?]
+	at NetTelnet.RawDataExtraction.run(NetTelnet.java:358) [bin/:?]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [?:1.8.0_45]
+	at java.util.TimerThread.run(Timer.java:505) [?:1.8.0_45]
+12:31:37.865 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+12:31:37.865 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+12:31:37.865 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+12:32:21.225 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:32:21 CST 2015
+12:32:21.295 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:32:21.318 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:32:22.105 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:32:22.105 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:32:22.194 [Timer-0] ERROR NetTelnet.NetTelnet - catching
+java.lang.NumberFormatException: For input string: "IMPV"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043) ~[?:1.8.0_45]
+	at sun.misc.FloatingDecimal.parseFloat(FloatingDecimal.java:122) ~[?:1.8.0_45]
+	at java.lang.Float.parseFloat(Float.java:451) ~[?:1.8.0_45]
+	at MysqlDAOImpl.MysqlDAOImpl.insertForQUOTE(MysqlDAOImpl.java:190) ~[bin/:?]
+	at NetTelnet.NetTelnet.readAndWrite(NetTelnet.java:156) ~[bin/:?]
+	at NetTelnet.NetTelnet.sendCommand(NetTelnet.java:276) [bin/:?]
+	at NetTelnet.RawDataExtraction.run(NetTelnet.java:358) [bin/:?]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [?:1.8.0_45]
+	at java.util.TimerThread.run(Timer.java:505) [?:1.8.0_45]
+12:32:22.206 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+12:32:22.207 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+12:32:22.208 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+12:37:20.409 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:37:20 CST 2015
+12:37:20.483 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:37:43.464 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:37:43 CST 2015
+12:37:43.692 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:38:11.546 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:38:11 CST 2015
+12:38:11.626 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:38:33.177 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:38:33 CST 2015
+12:38:33.256 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:39:12.999 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:39:12 CST 2015
+12:39:13.067 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:39:13.089 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:39:13.959 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:39:13.959 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:44:18.718 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:44:18 CST 2015
+12:44:18.786 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:44:18.809 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:44:19.599 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:44:19.600 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:44:19.684 [Timer-0] ERROR NetTelnet.NetTelnet - catching
+java.lang.NumberFormatException: For input string: "MM_IMPV"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043) ~[?:1.8.0_45]
+	at sun.misc.FloatingDecimal.parseFloat(FloatingDecimal.java:122) ~[?:1.8.0_45]
+	at java.lang.Float.parseFloat(Float.java:451) ~[?:1.8.0_45]
+	at MysqlDAOImpl.MysqlDAOImpl.insertForQUOTE(MysqlDAOImpl.java:190) ~[bin/:?]
+	at NetTelnet.NetTelnet.readAndWrite(NetTelnet.java:155) ~[bin/:?]
+	at NetTelnet.NetTelnet.sendCommand(NetTelnet.java:275) [bin/:?]
+	at NetTelnet.RawDataExtraction.run(NetTelnet.java:362) [bin/:?]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [?:1.8.0_45]
+	at java.util.TimerThread.run(Timer.java:505) [?:1.8.0_45]
+12:44:19.694 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+12:44:19.694 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+12:44:19.694 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+12:44:46.459 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:44:46 CST 2015
+12:44:46.542 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:44:46.577 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:44:47.444 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:44:47.444 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:48:42.908 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:48:42 CST 2015
+12:48:42.980 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:48:58.776 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:48:58 CST 2015
+12:48:58.857 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:48:59.361 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:49:00.182 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:49:00.183 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+12:50:04.681 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 12:50:04 CST 2015
+12:50:04.763 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+12:50:05.270 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+12:50:06.065 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+12:50:06.065 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+13:00:56.016 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 13:00:56 CST 2015
+13:00:56.084 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+13:00:56.591 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+13:00:57.378 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+13:00:57.379 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+13:00:59.579 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+13:00:59.580 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+13:00:59.580 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+13:03:39.662 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 13:03:39 CST 2015
+13:03:39.734 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+13:03:40.237 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+13:03:41.103 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+13:03:41.104 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+13:03:48.031 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+13:03:48.031 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+13:03:48.032 [Timer-0] INFO  NetTelnet.RawDataExtraction - raw data extraction ended
+13:05:04.876 [Timer-0] INFO  NetTelnet.RawDataExtraction - 启动Telnet >>> Fri Jul 17 13:05:04 CST 2015
+13:05:04.958 [Timer-0] INFO  NetTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+13:05:05.460 [Timer-0] INFO  NetTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+13:05:06.293 [Timer-0] INFO  DBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+13:05:06.294 [Timer-0] INFO  NetTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+14:27:26.979 [Timer-0] INFO  dataExtraction.TickerDataExtractionTask - start telnet to extract ticker detail data >>> Fri Jul 17 14:27:26 CST 2015
+14:27:27.066 [Timer-0] INFO  netTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+14:27:27.568 [Timer-0] INFO  netTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+14:27:28.351 [Timer-0] INFO  dBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+14:27:28.351 [Timer-0] INFO  netTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+14:37:43.482 [Timer-0] INFO  dataExtraction.TickerDataExtractionTask - start telnet to extract ticker detail data >>> Fri Jul 17 14:37:43 CST 2015
+14:37:43.559 [Timer-0] INFO  netTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+14:37:44.062 [Timer-0] INFO  netTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+14:37:44.841 [Timer-0] INFO  dBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+14:37:44.842 [Timer-0] INFO  netTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+15:30:56.174 [Timer-0] INFO  netTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+15:30:56.176 [Timer-0] INFO  netTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+15:30:56.177 [Timer-0] INFO  dataExtraction.TickerDataExtractionTask - ticker detail data extraction ended
+15:33:25.487 [Timer-0] INFO  dataExtraction.TickerDataExtractionTask - start telnet to extract ticker detail data >>> Fri Jul 17 15:33:25 CST 2015
+15:33:25.566 [Timer-0] INFO  netTelnet.NetTelnet - telnet >>> ip : 203.187.171.249, port : 33331
+15:33:26.071 [Timer-0] INFO  netTelnet.NetTelnet - substitute QUOTE via command >>> SQUOTE
+15:33:26.917 [Timer-0] INFO  dBDriverUtil.MysqlDBUtil - Succeeded connecting to the Database!
+15:33:26.917 [Timer-0] INFO  netTelnet.NetTelnet - insert raw data from telnet to database >>> insert ignore into market_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+15:33:27.202 [Timer-0] INFO  netTelnet.NetTelnet - substitute QUOTE via command >>> UQUOTE
+15:33:27.202 [Timer-0] INFO  netTelnet.NetTelnet - substitute QUOTE via command >>> QUIT
+15:33:27.203 [Timer-0] INFO  dataExtraction.TickerDataExtractionTask - ticker detail data extraction ended
