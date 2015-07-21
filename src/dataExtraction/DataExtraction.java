@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class DataExtraction {
+	static Logger logger = LogManager.getLogger();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -31,6 +32,7 @@ public class DataExtraction {
 
 			public void run() {
 				// TODO Auto-generated method stub
+				logger.info("run tickerDataTask >>> " + new Date(System.currentTimeMillis()));
 				timer.schedule(tickerDataExtractionTask, date, period);
 
 			}
@@ -66,16 +68,10 @@ class TickerDataExtractionTask extends TimerTask {
 			String password = "";
 			NetTelnet telnet = new NetTelnet(ip, port, user, password);
 			byte[] bytes = new byte[1024];
-			int readCount = 0;
-			// while (readCount <= 1) {
-			// readCount += telnet.in.read(bytes);
-			// }
-			// inputstream may be slower than read(byte[])
+			
 			Thread.sleep(500);
 			System.out.println("test " + telnet.in.read(bytes));
 			System.out.println(new String(bytes));
-			// System.out.println("test " + telnet.in.read(bytes));
-			// System.out.println(new String(bytes));
 
 			// telnet.sendCommand("STA"); // substitute TA
 			telnet.sendCommand("SQUOTE");

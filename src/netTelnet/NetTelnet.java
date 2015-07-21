@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 
 import mysqlDAOImpl.MysqlDAOImpl;
 
@@ -139,6 +140,21 @@ public class NetTelnet {
 				+ indexSql);
 		logger.info("insert stock raw data from telnet to database >>> "
 				+ stockSql);
+
+		// truncate the table : delete the previous days data
+		String stockTruncateSql = "truncate talbe xcube.stock_quotation;";
+		String futuresTruncateSql = "truncate talbe xcube.futures_quotation;";
+		String debtTruncateSql = "truncate talbe xcube.debt_quotation;";
+		String indexTruncateSql = "truncate talbe xcube.index_quotation;";
+		conn.prepareStatement(stockTruncateSql).executeUpdate();
+		logger.info("truncate talbe xcube.stock_quotation");
+		conn.prepareStatement(futuresTruncateSql).executeUpdate();
+		logger.info("truncate talbe xcube.futures_quotation");
+		conn.prepareStatement(debtTruncateSql).executeUpdate();
+		logger.info("truncate talbe xcube.debt_quotation");
+		conn.prepareStatement(indexTruncateSql).executeUpdate();
+		logger.info("truncate talbe xcube.index_quotation");
+
 		PreparedStatement futurePrepareStatement = conn
 				.prepareStatement(futureSql);
 		PreparedStatement debtPrepareStatement = conn.prepareStatement(debtSql);
@@ -152,7 +168,7 @@ public class NetTelnet {
 		try {
 			conn.setAutoCommit(false);
 			String record = null;
-			
+
 			while ((record = bufferedReader.readLine().toString().trim()) != null) {
 				Calendar calendar = Calendar.getInstance();
 				// if(isAfterExpired(calendar)) break;
@@ -166,7 +182,8 @@ public class NetTelnet {
 				if (split[1].startsWith("S")) {
 					daoImpl.insertForQUOTE(split, stockPrepareStatement);
 					stockPrepareStatement.addBatch();
-				} else if (split[1].startsWith("TA") || split[1].startsWith("TC")) {
+				} else if (split[1].startsWith("TA")
+						|| split[1].startsWith("TC")) {
 					daoImpl.insertForQUOTE(split, futurePrepareStatement);
 					futurePrepareStatement.addBatch();
 				} else if (split[1].matches("^(TF|T)[0-9]+")) {
@@ -204,6 +221,10 @@ public class NetTelnet {
 								calendar.get(Calendar.MONTH),
 								calendar.get(Calendar.DAY_OF_MONTH), 13, 0, 0);
 						long expectedMillis = calendar.getTimeInMillis();
+						System.out
+								.println("Now is NoonExpired time, sleeping for "
+										+ (expectedMillis - curMillis)
+										+ " millis.");
 						Thread.sleep(expectedMillis - curMillis);
 						// Thread.sleep(90 * 60 * 1000);
 					} catch (InterruptedException e) {
@@ -220,15 +241,21 @@ public class NetTelnet {
 						conn.commit();
 						System.out.println("rest records is " + (count % 500));
 					}
+					logger.info("Now is AfterNoon Expired >>> " + new Date(System.currentTimeMillis()));
 					break;
 				}
 			}
-			
+
 			stockPrepareStatement.close();
+			logger.info("close stockPrepareStatement");
 			futurePrepareStatement.close();
+			logger.info("close futurePrepareStatement");
 			debtPrepareStatement.close();
+			logger.info("close debtPrepareStatement");
 			indexPrepareStatement.close();
+			logger.info("close indexPrepareStatement");
 			conn.close();
+			logger.info("close Connection");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.catching(e);
@@ -317,7 +344,7 @@ public class NetTelnet {
 					break;
 				}
 			}
-			
+
 			prepareStatement.close();
 			conn.close();
 		} catch (IOException e) {
