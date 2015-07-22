@@ -1,5 +1,7 @@
 package mysqlDAOImpl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -35,26 +37,26 @@ public class MysqlDAOImpl implements MysqlDAO {
 			}
 			for (int i = 0; i < 5; i++) {
 				prepareStatement
-						.setInt(i + 10, Integer.parseInt(record[i + 9]));
+						.setLong(i + 10, Long.parseLong(record[i + 9]));
 			}
 			for (int i = 0; i < 5; i++) {
 				prepareStatement.setFloat(i + 15,
 						Float.parseFloat(record[i + 14]));
 			}
 			for (int i = 0; i < 5; i++) {
-				prepareStatement.setInt(i + 20,
-						Integer.parseInt(record[i + 19]));
+				prepareStatement.setLong(i + 20,
+						Long.parseLong(record[i + 19]));
 			}
 			for (int i = 0; i < 6; i++) {
 				prepareStatement.setFloat(i + 25,
 						Float.parseFloat(record[i + 24]));
 			}
 			for (int i = 0; i < 2; i++) {
-				prepareStatement.setInt(i + 31,
-						Integer.parseInt(record[i + 30]));
+				prepareStatement.setLong(i + 31,
+						Long.parseLong(record[i + 30]));
 			}
 			prepareStatement.setFloat(33, Float.parseFloat(record[32]));
-			prepareStatement.setInt(34, Integer.parseInt(record[33]));
+			prepareStatement.setLong(34, Long.parseLong(record[33]));
 			for (int i = 0; i < 7; i++) {
 				prepareStatement.setFloat(i + 35,
 						Float.parseFloat(record[i + 34]));
@@ -83,38 +85,39 @@ public class MysqlDAOImpl implements MysqlDAO {
 
 	public void insertForQUOTE(String[] record,
 			PreparedStatement preparedStatement) {
+		System.out.println("turnover >>> " + record[13] + ", " + new BigDecimal(record[13]));
 		try {
 			preparedStatement.setString(1, record[0]);
 			preparedStatement.setString(2, record[1]);
 			preparedStatement.setString(3, record[2]);
 			for (int i = 3; i < 9; i++) {
-				preparedStatement.setFloat(i + 1, Float.parseFloat(record[i]));
+				preparedStatement.setBigDecimal(i + 1, new BigDecimal(record[i]));
 			}
-			preparedStatement.setInt(10, Integer.parseInt(record[9]));
-			preparedStatement.setInt(11, Integer.parseInt(record[10]));
-			preparedStatement.setFloat(12, Float.parseFloat(record[11]));
-			preparedStatement.setInt(13, Integer.parseInt(record[12]));
+			preparedStatement.setLong(10, Long.parseLong(record[9]));
+			preparedStatement.setLong(11, Long.parseLong(record[10]));
+			preparedStatement.setBigDecimal(12, new BigDecimal(record[11]));
+			preparedStatement.setLong(13, Long.parseLong(record[12]));
 			for (int i = 13; i < 22; i++) {
-				preparedStatement.setFloat(i + 1, Float.parseFloat(record[i]));
+				preparedStatement.setBigDecimal(i + 1, new BigDecimal(record[i]));
 			}
-			preparedStatement.setInt(23, Integer.parseInt(record[22]));
-			preparedStatement.setInt(24, Integer.parseInt(record[23]));
-			preparedStatement.setFloat(25, Float.parseFloat(record[24]));
-			preparedStatement.setFloat(26, Float.parseFloat(record[25]));
-			preparedStatement.setInt(27, Integer.parseInt(record[26]));
-			preparedStatement.setInt(28, Integer.parseInt(record[27]));
-			preparedStatement.setFloat(29, Float.parseFloat(record[28]));
-			preparedStatement.setFloat(30, Float.parseFloat(record[29]));
-			preparedStatement.setInt(31, Integer.parseInt(record[30]));
-			preparedStatement.setInt(32, Integer.parseInt(record[31]));
-			preparedStatement.setFloat(33, Float.parseFloat(record[32]));
-			preparedStatement.setFloat(34, Float.parseFloat(record[33]));
-			preparedStatement.setInt(35, Integer.parseInt(record[34]));
-			preparedStatement.setInt(36, Integer.parseInt(record[35]));
-			preparedStatement.setFloat(37, Float.parseFloat(record[36]));
-			preparedStatement.setFloat(38, Float.parseFloat(record[37]));
-			preparedStatement.setInt(39, Integer.parseInt(record[38]));
-			preparedStatement.setInt(40, Integer.parseInt(record[39]));
+			preparedStatement.setLong(23, Long.parseLong(record[22]));
+			preparedStatement.setLong(24, Long.parseLong(record[23]));
+			preparedStatement.setBigDecimal(25, new BigDecimal(record[24]));
+			preparedStatement.setBigDecimal(26, new BigDecimal(record[25]));
+			preparedStatement.setLong(27, Long.parseLong(record[26]));
+			preparedStatement.setLong(28, Long.parseLong(record[27]));
+			preparedStatement.setBigDecimal(29, new BigDecimal(record[28]));
+			preparedStatement.setBigDecimal(30, new BigDecimal(record[29]));
+			preparedStatement.setLong(31, Long.parseLong(record[30]));
+			preparedStatement.setLong(32, Long.parseLong(record[31]));
+			preparedStatement.setBigDecimal(33, new BigDecimal(record[32]));
+			preparedStatement.setBigDecimal(34, new BigDecimal(record[33]));
+			preparedStatement.setLong(35, Long.parseLong(record[34]));
+			preparedStatement.setLong(36, Long.parseLong(record[35]));
+			preparedStatement.setBigDecimal(37, new BigDecimal(record[36]));
+			preparedStatement.setBigDecimal(38, new BigDecimal(record[37]));
+			preparedStatement.setLong(39, Long.parseLong(record[38]));
+			preparedStatement.setLong(40, Long.parseLong(record[39]));
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

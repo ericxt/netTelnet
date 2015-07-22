@@ -142,18 +142,18 @@ public class NetTelnet {
 				+ stockSql);
 
 		// truncate the table : delete the previous days data
-		String stockTruncateSql = "truncate talbe xcube.stock_quotation;";
-		String futuresTruncateSql = "truncate talbe xcube.futures_quotation;";
-		String debtTruncateSql = "truncate talbe xcube.debt_quotation;";
-		String indexTruncateSql = "truncate talbe xcube.index_quotation;";
+		String stockTruncateSql = "truncate table xcube.stock_quotation;";
+		String futuresTruncateSql = "truncate table xcube.futures_quotation;";
+		String debtTruncateSql = "truncate table xcube.debt_quotation;";
+		String indexTruncateSql = "truncate table xcube.index_quotation;";
 		conn.prepareStatement(stockTruncateSql).executeUpdate();
-		logger.info("truncate talbe xcube.stock_quotation");
+		logger.info("truncate table xcube.stock_quotation");
 		conn.prepareStatement(futuresTruncateSql).executeUpdate();
-		logger.info("truncate talbe xcube.futures_quotation");
+		logger.info("truncate table xcube.futures_quotation");
 		conn.prepareStatement(debtTruncateSql).executeUpdate();
-		logger.info("truncate talbe xcube.debt_quotation");
+		logger.info("truncate table xcube.debt_quotation");
 		conn.prepareStatement(indexTruncateSql).executeUpdate();
-		logger.info("truncate talbe xcube.index_quotation");
+		logger.info("truncate table xcube.index_quotation");
 
 		PreparedStatement futurePrepareStatement = conn
 				.prepareStatement(futureSql);
