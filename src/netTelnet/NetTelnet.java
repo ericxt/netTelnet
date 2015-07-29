@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import com.mysql.jdbc.Connection;
 
 import dBDriverUtil.MysqlDBUtil;
+import dataExtraction.SettlementDataExtraction;
 
 public class NetTelnet {
 	static Logger logger = LogManager.getLogger(NetTelnet.class.getName());
@@ -347,6 +348,8 @@ public class NetTelnet {
 
 			prepareStatement.close();
 			conn.close();
+			
+			new SettlementDataExtraction().operate();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.catching(e);

@@ -12,7 +12,8 @@ public class MysqlDBUtil {
 	static Logger logger = LogManager.getLogger(MysqlDBUtil.class.getName());
     private static String driver = "com.mysql.jdbc.Driver";
 //    private static String url = "jdbc:mysql://localhost:3306/xcube?rewriteBatchedStatements=true";
-    private static String url = "jdbc:mysql://121.199.41.209:3306/xcube?rewriteBatchedStatements=true";
+//    private static String url = "jdbc:mysql://121.199.41.209:3306/xcube?rewriteBatchedStatements=true";
+    private static String url = "jdbc:mysql://121.40.82.174:3306/xcube?rewriteBatchedStatements=true";
     private static String user = "root"; 
 //    private static String password = "289589"; // for localhost
     private static String password = "lab502";
