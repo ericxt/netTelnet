@@ -19,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 import com.mysql.jdbc.Connection;
 
 import dBDriverUtil.MysqlDBUtil;
-import dataExtraction.SettlementDataExtraction;
 
 public class NetTelnet {
 	static Logger logger = LogManager.getLogger(NetTelnet.class.getName());
@@ -242,7 +241,8 @@ public class NetTelnet {
 						conn.commit();
 						System.out.println("rest records is " + (count % 500));
 					}
-					logger.info("Now is AfterNoon Expired >>> " + new Date(System.currentTimeMillis()));
+					logger.info("Now is AfterNoon Expired >>> "
+							+ new Date(System.currentTimeMillis()));
 					break;
 				}
 			}
@@ -348,8 +348,7 @@ public class NetTelnet {
 
 			prepareStatement.close();
 			conn.close();
-			
-			new SettlementDataExtraction().operate();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.catching(e);
@@ -361,6 +360,11 @@ public class NetTelnet {
 		}
 	}
 
+	/**
+	 * isAfterExpired : determine the time whether expired
+	 * @param calendar
+	 * @return
+	 */
 	private boolean isAfterExpired(Calendar calendar) {
 		// TODO Auto-generated method stub
 		if (calendar == null) {
@@ -377,6 +381,11 @@ public class NetTelnet {
 		return false;
 	}
 
+	/**
+	 * isNoonExpired : determine the time whether expired
+	 * @param calendar
+	 * @return
+	 */
 	private boolean isNoonExpired(Calendar calendar) {
 		// TODO Auto-generated method stub
 		if (calendar == null) {
@@ -443,53 +452,4 @@ public class NetTelnet {
 		}
 	}
 
-	/**
-	 * public static void main(String[] args) throws SQLException { // try { //
-	 * System.out.println("启动Telnet..."); // logger.info("启动Telnet..."); //
-	 * String ip = "203.187.171.249"; // int port = 33331; // String user = "";
-	 * // String password = ""; // NetTelnet telnet = new NetTelnet(ip, port,
-	 * user, password); // byte[] bytes = new byte[256]; //
-	 * System.out.println(telnet.in.read(bytes)); // System.out.println(new
-	 * String(bytes)); // // // telnet.sendCommand("STA"); // substitute TA //
-	 * telnet.sendCommand("SQUOTE"); // telnet.sendCommand("UQUOTE"); //
-	 * telnet.sendCommand("QUIT"); // System.out.println("显示结果"); //
-	 * logger.info("raw data extraction ended"); // telnet.disconnect(); // }
-	 * catch (Exception e) { // logger.catching(e); // e.printStackTrace(); // }
-	 * 
-	 * Calendar calendar = Calendar.getInstance(); int year =
-	 * calendar.get(Calendar.YEAR); int month = calendar.get(Calendar.MONTH);
-	 * int day = calendar.get(Calendar.DAY_OF_MONTH); calendar.set(year, month,
-	 * day, 9, 15, 0); Date date = calendar.getTime(); System.out.println(date);
-	 * 
-	 * int period = 24 * 60 * 60 * 1000; Timer timer = new Timer(); TimerTask
-	 * task = new RawDataExtraction(); timer.schedule(task, date, period);
-	 * 
-	 * }
-	 **/
 }
-
-/**
- * class RawDataExtraction extends TimerTask { static Logger logger =
- * LogManager.getLogger();
- * 
- * public void run() { // TODO Auto-generated method stub try {
- * System.out.println("启动Telnet..."); logger.info("启动Telnet >>> " + new
- * Date(System.currentTimeMillis())); String ip = "203.187.171.249"; int port =
- * 33331; String user = ""; String password = ""; NetTelnet telnet = new
- * NetTelnet(ip, port, user, password); byte[] bytes = new byte[1024]; int
- * readCount = 0; // while (readCount <= 1) { // readCount +=
- * telnet.in.read(bytes); // } // inputstream may be slower than read(byte[])
- * Thread.sleep(500); System.out.println("test " + telnet.in.read(bytes));
- * System.out.println(new String(bytes)); // System.out.println("test " +
- * telnet.in.read(bytes)); // System.out.println(new String(bytes));
- * 
- * // telnet.sendCommand("STA"); // substitute TA telnet.sendCommand("SQUOTE");
- * telnet.sendCommand("UQUOTE"); telnet.sendCommand("QUIT");
- * System.out.println("显示结果"); logger.info("raw data extraction ended"); //
- * telnet.disconnect(); } catch (Exception e) { logger.catching(e);
- * e.printStackTrace(); }
- * 
- * }
- * 
- * }
- **/

@@ -26,7 +26,7 @@ public class DataExtraction {
 		final int period = 24 * 60 * 60 * 1000;
 		final Timer timer = new Timer();
 		final TimerTask tickerDataExtractionTask = new TickerDataExtractionTask();
-		final SentimentExtractionTask sentimentExtractionTask = new SentimentExtractionTask();
+//		final SentimentExtractionTask sentimentExtractionTask = new SentimentExtractionTask();
 		
 		Thread tickerDataTask = new Thread(new Runnable() {
 
@@ -37,7 +37,7 @@ public class DataExtraction {
 
 			}
 		}, "TickerDataTask");
-//		tickerDataTask.start();
+		tickerDataTask.start();
 		
 //		Thread sentimentTask = new Thread(new Runnable() {
 //			
@@ -48,8 +48,6 @@ public class DataExtraction {
 //			}
 //		});
 //		sentimentTask.start();
-		
-		new SettlementDataExtraction().operate();
 		
 	}
 

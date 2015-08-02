@@ -1,7 +1,6 @@
 package mysqlDAOImpl;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -9,7 +8,6 @@ import java.sql.Timestamp;
 import mysqlDAO.MysqlDAO;
 
 import com.mysql.jdbc.Connection;
-import com.sun.prism.Presentable;
 
 import dBDriverUtil.MysqlDBUtil;
 
