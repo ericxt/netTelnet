@@ -19,7 +19,7 @@ public class DataExtraction {
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH);
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
-		calendar.set(year, month, day + 1, 9, 15, 0);
+		calendar.set(year, month, day + 1, 15, 20, 0);
 		final Date date = calendar.getTime();
 		System.out.println(date);
 
@@ -37,7 +37,7 @@ public class DataExtraction {
 
 			}
 		}, "TickerDataTask");
-		tickerDataTask.start();
+//		tickerDataTask.start();
 		
 //		Thread sentimentTask = new Thread(new Runnable() {
 //			
@@ -48,6 +48,8 @@ public class DataExtraction {
 //			}
 //		});
 //		sentimentTask.start();
+		
+		new SettlementDataExtraction().operate();
 		
 	}
 
