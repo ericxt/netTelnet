@@ -102,36 +102,61 @@ public class NetTelnet {
 	public void readAndWriteForTicker(String command) throws SQLException {
 		int count = 0;
 
+		int debtCount = 0;
+		int futuresCount = 0;
+		int indexCount = 0;
+		int stockCount = 0;
+
+		final int BATCH_RECORDS = 500;
+
 		// for market_quotation
-		String stockSql = "insert ignore into stock_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+		String stockSql = "replace into stock_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
+				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
+				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
+				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
+				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+		String shStockSql = "replace into sh_stock_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
+				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
+				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
+				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
+				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+		String szStockSql = "replace into sz_stock_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
+				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
+				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
+				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
+				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+		String futureSql = "replace into futures_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
 				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
 				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
 				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
 				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
 				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
 				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		String futureSql = "insert ignore into futures_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+		String debtSql = "replace into debt_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
 				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
 				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
 				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
 				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
 				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
 				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		String debtSql = "insert ignore into debt_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
+		String indexSql = "replace into index_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
 				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
 				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
 				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
 				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
 				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
 				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		String indexSql = "insert ignore into index_quotation(TradingTime,ContractId,ExchangeId,PreSettlementPrice,"
-				+ "CurrSettlementPrice,AveragePrice,PreClosePrice,CurrClosePrice,CurrOpenPrice,PreHoldings,"
-				+ "Holdings,LatestPrice,Volume,TurnOver,TopQuotation,BottomQuotation,TopPrice,BottomPrice,"
-				+ "PreDelta,CurrDelta,BidPrice1,AskPrice1,BidVolume1,AskVolume1,BidPrice2,AskPrice2,BidVolume2,"
-				+ "AskVolume2,BidPrice3,AskPrice3,BidVolume3,AskVolume3,BidPrice4,AskPrice4,BidVolume4,AskVolume4,"
-				+ "BidPrice5,AskPrice5,BidVolume5,AskVolume5) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-				+ "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		Connection conn = MysqlDBUtil.getConnection();
+		Connection debtConn = MysqlDBUtil.getConnection();
+		Connection futuresConn = MysqlDBUtil.getConnection();
+		Connection indexConn = MysqlDBUtil.getConnection();
+		Connection stockConn = MysqlDBUtil.getConnection();
+
 		logger.info("insert futures raw data from telnet to database >>> "
 				+ futureSql);
 		logger.info("insert debt raw data from telnet to database >>> "
@@ -139,34 +164,40 @@ public class NetTelnet {
 		logger.info("insert index raw data from telnet to database >>> "
 				+ indexSql);
 		logger.info("insert stock raw data from telnet to database >>> "
-				+ stockSql);
+				+ shStockSql);
 
 		// truncate the table : delete the previous days data
-		String stockTruncateSql = "truncate table xcube.stock_quotation;";
-		String futuresTruncateSql = "truncate table xcube.futures_quotation;";
-		String debtTruncateSql = "truncate table xcube.debt_quotation;";
-		String indexTruncateSql = "truncate table xcube.index_quotation;";
-		conn.prepareStatement(stockTruncateSql).executeUpdate();
-		logger.info("truncate table xcube.stock_quotation");
-		conn.prepareStatement(futuresTruncateSql).executeUpdate();
-		logger.info("truncate table xcube.futures_quotation");
-		conn.prepareStatement(debtTruncateSql).executeUpdate();
-		logger.info("truncate table xcube.debt_quotation");
-		conn.prepareStatement(indexTruncateSql).executeUpdate();
-		logger.info("truncate table xcube.index_quotation");
+		// String stockTruncateSql = "truncate table xcube.stock_quotation;";
+		// String futuresTruncateSql =
+		// "truncate table xcube.futures_quotation;";
+		// String debtTruncateSql = "truncate table xcube.debt_quotation;";
+		// String indexTruncateSql = "truncate table xcube.index_quotation;";
+		// stockConn.prepareStatement(stockTruncateSql).executeUpdate();
+		// logger.info("truncate table xcube.stock_quotation");
+		// futuresConn.prepareStatement(futuresTruncateSql).executeUpdate();
+		// logger.info("truncate table xcube.futures_quotation");
+		// debtConn.prepareStatement(debtTruncateSql).executeUpdate();
+		// logger.info("truncate table xcube.debt_quotation");
+		// indexConn.prepareStatement(indexTruncateSql).executeUpdate();
+		// logger.info("truncate table xcube.index_quotation");
 
-		PreparedStatement futurePrepareStatement = conn
+		PreparedStatement futurePrepareStatement = futuresConn
 				.prepareStatement(futureSql);
-		PreparedStatement debtPrepareStatement = conn.prepareStatement(debtSql);
-		PreparedStatement indexPrepareStatement = conn
+		PreparedStatement debtPrepareStatement = debtConn
+				.prepareStatement(debtSql);
+		PreparedStatement indexPrepareStatement = indexConn
 				.prepareStatement(indexSql);
-		PreparedStatement stockPrepareStatement = conn
-				.prepareStatement(stockSql);
+		// PreparedStatement stockPrepareStatement = stockConn
+		// .prepareStatement(stockSql);
+		PreparedStatement shStockPrepareStatement = stockConn
+				.prepareStatement(shStockSql);
+		PreparedStatement szStockPrepareStatement = stockConn
+				.prepareStatement(szStockSql);
 		InputStreamReader inputStreamReader = new InputStreamReader(in);
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 		try {
-			conn.setAutoCommit(false);
+			stockConn.setAutoCommit(false);
 			String record = null;
 
 			while ((record = bufferedReader.readLine().toString().trim()) != null) {
@@ -177,43 +208,72 @@ public class NetTelnet {
 				System.out.println(record);
 				// remove the beginning prefix "QUOTE" and the commas
 				record = record.substring(6);
-				count++;
+				// count++;
 				String[] split = record.split(",");
-				if (split[1].startsWith("S")) {
-					daoImpl.insertForQUOTE(split, stockPrepareStatement);
-					stockPrepareStatement.addBatch();
+				if (split[1].startsWith("SH")) {
+					stockCount++;
+					daoImpl.insertForQUOTE(split, shStockPrepareStatement);
+					// shStockPrepareStatement.executeUpdate();
+					shStockPrepareStatement.addBatch();
+
+					// if (stockCount % 500 == 0) {
+					// shStockPrepareStatement.executeBatch();
+					// stockConn.commit();
+					// System.out
+					// .println("    >>> Update 1000 SHStock Records");
+					// stockCount = 0;
+					// }
+				} else if (split[1].startsWith("SZ")) {
+					stockCount++;
+					daoImpl.insertForQUOTE(split, szStockPrepareStatement);
+					szStockPrepareStatement.addBatch();
+
+					// if (stockCount % 500 == 0) {
+					// szStockPrepareStatement.executeBatch();
+					// stockConn.commit();
+					// System.out
+					// .println("    >>> Update 1000 SZStock Records");
+					// stockCount = 0;
+					// }
 				} else if (split[1].startsWith("TA")
 						|| split[1].startsWith("TC")) {
 					daoImpl.insertForQUOTE(split, futurePrepareStatement);
-					futurePrepareStatement.addBatch();
+					// futurePrepareStatement.addBatch();
+					futurePrepareStatement.executeUpdate();
+
 				} else if (split[1].matches("^(TF|T)[0-9]+")) {
 					daoImpl.insertForQUOTE(split, debtPrepareStatement);
-					debtPrepareStatement.addBatch();
+					// debtPrepareStatement.addBatch();
+					debtPrepareStatement.executeUpdate();
 				} else if (split[1].startsWith("I")) {
 					daoImpl.insertForQUOTE(split, indexPrepareStatement);
-					indexPrepareStatement.addBatch();
+					// indexPrepareStatement.addBatch();
+					indexPrepareStatement.executeUpdate();
 				}
 
-				if (count % 500 == 0) {
-					stockPrepareStatement.executeBatch();
-					futurePrepareStatement.executeBatch();
-					debtPrepareStatement.executeBatch();
-					indexPrepareStatement.executeBatch();
-					conn.commit();
-					System.out.println("insert 500 records");
+				if (stockCount % BATCH_RECORDS == 0) {
+					// stockPrepareStatement.executeBatch();
+					shStockPrepareStatement.executeBatch();
+					szStockPrepareStatement.executeBatch();
+					// futurePrepareStatement.executeBatch();
+					// debtPrepareStatement.executeBatch();
+					// indexPrepareStatement.executeBatch();
+					stockConn.commit();
+					System.out.println("insert " + BATCH_RECORDS + " records");
 				}
-				System.out.println("current time >>> " + calendar.getTime()
-						+ " ,count >>> " + count);
 
 				if (isNoonExpired(calendar)) {
 					System.out.println("date is expired, sleep!");
-					if (count % 500 != 0) {
-						stockPrepareStatement.executeBatch();
-						futurePrepareStatement.executeBatch();
-						debtPrepareStatement.executeBatch();
-						indexPrepareStatement.executeBatch();
-						conn.commit();
-						System.out.println("rest records is " + (count % 500));
+					if (stockCount % BATCH_RECORDS != 0) {
+						shStockPrepareStatement.executeBatch();
+						szStockPrepareStatement.executeBatch();
+
+						// futurePrepareStatement.executeBatch();
+						// debtPrepareStatement.executeBatch();
+						// indexPrepareStatement.executeBatch();
+						stockConn.commit();
+						System.out.println("rest stock records is "
+								+ (stockCount % BATCH_RECORDS));
 					}
 					try {
 						long curMillis = calendar.getTimeInMillis();
@@ -233,13 +293,15 @@ public class NetTelnet {
 					}
 				} else if (isAfterExpired(calendar)) {
 					System.out.println("date is expired, break!");
-					if (count % 500 != 0) {
-						stockPrepareStatement.executeBatch();
-						futurePrepareStatement.executeBatch();
-						debtPrepareStatement.executeBatch();
-						indexPrepareStatement.executeBatch();
-						conn.commit();
-						System.out.println("rest records is " + (count % 500));
+					if (stockCount % BATCH_RECORDS != 0) {
+						shStockPrepareStatement.executeBatch();
+						szStockPrepareStatement.executeBatch();
+						// futurePrepareStatement.executeBatch();
+						// debtPrepareStatement.executeBatch();
+						// indexPrepareStatement.executeBatch();
+						stockConn.commit();
+						System.out.println("rest stock records is "
+								+ (stockCount % BATCH_RECORDS));
 					}
 					logger.info("Now is AfterNoon Expired >>> "
 							+ new Date(System.currentTimeMillis()));
@@ -247,7 +309,8 @@ public class NetTelnet {
 				}
 			}
 
-			stockPrepareStatement.close();
+			shStockPrepareStatement.close();
+			szStockPrepareStatement.close();
 			logger.info("close stockPrepareStatement");
 			futurePrepareStatement.close();
 			logger.info("close futurePrepareStatement");
@@ -255,7 +318,10 @@ public class NetTelnet {
 			logger.info("close debtPrepareStatement");
 			indexPrepareStatement.close();
 			logger.info("close indexPrepareStatement");
-			conn.close();
+			stockConn.close();
+			futuresConn.close();
+			debtConn.close();
+			indexConn.close();
 			logger.info("close Connection");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -362,6 +428,7 @@ public class NetTelnet {
 
 	/**
 	 * isAfterExpired : determine the time whether expired
+	 * 
 	 * @param calendar
 	 * @return
 	 */
@@ -373,7 +440,7 @@ public class NetTelnet {
 		}
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		int minute = calendar.get(Calendar.MINUTE);
-		if ((hour == 15 && minute > 17) || (hour > 15)) {
+		if ((hour == 15 && minute > 16) || (hour > 15)) {
 			System.out.println("afterexpired >>> true");
 			return true;
 		}
@@ -383,6 +450,7 @@ public class NetTelnet {
 
 	/**
 	 * isNoonExpired : determine the time whether expired
+	 * 
 	 * @param calendar
 	 * @return
 	 */
@@ -394,7 +462,7 @@ public class NetTelnet {
 		}
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		int minute = calendar.get(Calendar.MINUTE);
-		if ((hour == 11 && minute > 32) || (hour > 11 && hour < 13)) {
+		if ((hour == 11 && minute > 32) || (hour > 11 && hour < 12)) {
 			System.out.println("NoonExpired >>> true");
 			return true;
 		}
